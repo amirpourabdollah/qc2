@@ -1,0 +1,11 @@
+from dimod import Integer, ConstrainedQuadraticModel, ExactCQMSolver
+
+N=15
+i=Integer('i', upper_bound=6)
+j=Integer('j', upper_bound=6)
+cqm=ConstrainedQuadraticModel()
+cqm.set_objective(N-i*j)
+cqm.add_constraint(N >= i*j)
+sampleset=ExactCQMSolver().sample_cqm(cqm)
+feasible_sampleset=sampleset.filter((lambda d: d.is_feasible))
+print(feasible_sampleset)
